@@ -50,34 +50,36 @@ def sort_and_create(line):
     firstName = fullName.split(' ')[1]
     otherNames = ' '.join(fullName.split(' ')[2::])
 
-    if otherNames == 'MAINA WAMBUI':
-        user = {
-            'designation': 'Practitioner',
-            'email': None,
-            'title': title,
-            'firstName': firstName,
-            'lastName': otherNames,
-            'userStatus': registration_status,
-            'uid': None,
-            'registeredOn': datetime.now(),
-            'practitionerDiscipline': discipline,
-            'dob': None,
-            'gender': None,
-            'mpdbRegDate': None,
-            'mpdbRegNumber': registration_number,
-            'userAddress': {
-                'poBox': address,
-                'location': county,
-            },
-            'userContact': {
-                'officeNumber': officeNumber,
-                'personalNumber': personalNumber,
-            },
-            'practitionerSpeciality': speciality,
-            'practitionerSubSpeciality': sub_speciality,
-            'qualifications': qualifications,
-        }
-        store.collection('incoming_users').document().set(user)
+    # Define User
+    user = {
+        'designation': 'Practitioner',
+        'email': None,
+        'title': title,
+        'firstName': firstName,
+        'lastName': otherNames,
+        'userStatus': registration_status,
+        'uid': None,
+        'registeredOn': datetime.now(),
+        'practitionerDiscipline': discipline,
+        'dob': None,
+        'gender': None,
+        'mpdbRegDate': None,
+        'mpdbRegNumber': registration_number,
+        'userAddress': {
+            'poBox': address,
+            'location': county,
+        },
+        'userContact': {
+            'officeNumber': officeNumber,
+            'personalNumber': personalNumber,
+        },
+        'practitionerSpeciality': speciality,
+        'practitionerSubSpeciality': sub_speciality,
+        'qualifications': qualifications,
+    }
+
+    # Save User
+    store.collection('incoming_users').document(registration_number).set(user)
 
 with open(file_path, 'r') as csv_file:
     csv_reader = csv.DictReader(csv_file, delimiter = ',')
